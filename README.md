@@ -18,9 +18,15 @@
 
 ## Quick Start
 
-### Data Preparation
+### Data & PLMs Preparation
 
-Unzip the files in `data` and  `KG`
+* Data: unzip the files in `data` and  `KG`
+
+* PLMs: download PLMs from https://huggingface.co/ and put them into `PLMs`
+
+  * BERT_base_chinese: https://huggingface.co/bert-base-chinese
+  
+  * BERT_base: https://huggingface.co/bert-base-uncased
 
 
 ### CMID (Chinese)
