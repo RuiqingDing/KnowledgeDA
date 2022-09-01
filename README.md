@@ -15,7 +15,13 @@
 * scikit-learn 0.24.1
 * ordered_set 4.0.2
 
+
 ## Quick Start
+
+### Data Preparation
+
+Unzip the files in `data` and  `KG`
+
 
 ### CMID (Chinese)
 
@@ -30,7 +36,6 @@ python augment_kg_ch.py
 
 ```python
 cd ./Classify
-python bert_classify.py --dataname CMID --datatype train --num_classes 4 --bert_path ../PLMs/BERT_base_chinese --seed 1
 python bert_classify.py --dataname CMID --datatype knowledge --aug_num 5 --num_classes 4 --bert_path ../PLMs/BERT_base_chinese --seed 1
 ```
 
@@ -48,7 +53,6 @@ python augment_kg_en.py
 
 ```python
 cd ./Classify
-python bert_classify.py --dataname SO-PLC --datatype train --num_classes 4 --bert_path ../PLMs/BERT_base --seed 1
 python bert_classify.py --dataname SO-PLC --datatype knowledge --aug_num 5 --num_classes 4 --bert_path ../PLMs/BERT_base --seed 1
 ```
 
