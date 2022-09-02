@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+import os
+sys.path.append("./Augment/")
 import numpy as np
 import pandas as pd
 import random
@@ -22,7 +25,7 @@ warnings.filterwarnings("ignore")
 
 # load data
 start = time.time()
-id2ent, ent2id, id2cat, cat2id, cid2eidlist, eid2cid, triples_all = load_data('../KG')
+id2ent, ent2id, id2cat, cat2id, cid2eidlist, eid2cid, triples_all = load_data('KG')
 print(f'Finish loading data, spend {time.time() - start}')
 
 def is_alphabet(uchar):
@@ -63,18 +66,17 @@ for cid in cid2eidlist:
     eidlist = [eid for eid in eidlist if eid not in del_eids]
     cid2eidlist[cid] = eidlist
 
-print(f'---Origin triples number: {len(triples_all)}')
+# print(f'---Origin triples number: {len(triples_all)}')
 triples_all = triples_all[~triples_all.eid1.isin(del_eids)]
 triples_all = triples_all[~triples_all.eid2.isin(del_eids)]
-print(f'---delete entity number: {len(del_eids)}')
-print(f'---triples number after deleting: {len(triples_all)}')
-print(f'spend {time.time()-start}\n')
-
+# print(f'---delete entity number: {len(del_eids)}')
+# print(f'---triples number after deleting: {len(triples_all)}')
+# print(f'spend {time.time()-start}\n')
 
 # # load entity names into dictionary
-entities = read_file(f'../KG/TagKG/entities_list.txt') #这个是umls的医疗数据集的子集
-print('Loading tagKG...')
-print('entity number: ', len(entities))
+entities = read_file(f'KG/TagKG/entities_list.txt') #这个是umls的医疗数据集的子集
+# print('Loading tagKG...')
+# print('entity number: ', len(entities))
 mwetokenizer = MWETokenizer(entities, separator=' ')
 
 
@@ -508,9 +510,9 @@ def generate_cluster_data(data_file, input_file, ent2id, triples_all, qid2cluste
 
 
 
-if __name__ == "__main__":
+def augment_KnowledgeDA_en(dataname):
     print('\nGenerate_abstract_data...')
-    data_file = f'../data/SO-PLC'
+    data_file = f'data/{dataname}'
     input_file = data_file + '/train.txt'
     cluster_file = data_file + '/abstract.txt'
     generate_abstract_data(data_file, input_file, cluster_file, mwetokenizer, stop_words, ent2id, eid2cid)
