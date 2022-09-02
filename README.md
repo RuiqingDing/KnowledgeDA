@@ -48,7 +48,7 @@ Attention: the fine-tuned model saved in `Classify/save_dict.`
 
 ### Extension to other task data
 
-* Put your task data into data
+* Put your task data into `data` folder
 
   * include 3 txt files: train, dev and test datasets
   
@@ -56,9 +56,9 @@ Attention: the fine-tuned model saved in `Classify/save_dict.`
   
   * can refer to the dataset CMID and SO-PLC
   
-* put your domain KG into `KG`
+* put your domain KG into `KG` folder
 
-  * include 2 main files: triples and the dictionary of entity category
+  * include 2 main files: triples and the dictionary of entity categories
   
   * can refer to the given KG format
   
