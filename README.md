@@ -29,36 +29,37 @@
   * BERT_base: https://huggingface.co/bert-base-uncased
 
 
-### CMID (Chinese)
+### Run Service
 
-**Step 1**. Data augmentation
+* **Example 1: CMID (Chinese)**
 
-```python
-cd ./Augment
-python augment_kg_ch.py 
+```
+python run_service.py --dataname CMID --domain healthcare --lan ch --plm_path BERT_base_chinese
 ```
 
-**Step 2**. BERT retraining with augmented data
+* **Example 2: SO-PLC (English)**
 
-```python
-cd ./Classify
-python bert_classify.py --dataname CMID --datatype knowledge --aug_num 5 --num_classes 4 --bert_path ../PLMs/BERT_base_chinese --seed 1
+```
+python run_service.py --dataname SO-PLC --domain software --lan en --plm_path BERT_base
 ```
 
+Attention: the fine-tuned model saved in `Classify/save_dict.`
 
-### SO-PLC (English)
 
-**Step 1**. Data augmentation
+### Extension to other task data
 
-```python
-cd ./Augment
-python augment_kg_en.py 
-```
+* Put your task data into data
 
-**Step 2**. BERT retraining with augmented data
+  * include 3 txt files: train, dev and test datasets
+  
+  * each row in train.txt and dev.txt should be like: `[id]\t[label]\t[text]`
+  
+  * can refer to the dataset CMID and SO-PLC
+  
+* put your domain KG into `KG`
 
-```python
-cd ./Classify
-python bert_classify.py --dataname SO-PLC --datatype knowledge --aug_num 5 --num_classes 4 --bert_path ../PLMs/BERT_base --seed 1
-```
+  * include 2 main files: triples and the dictionary of entity category
+  
+  * can refer to the given KG format
+  
 
