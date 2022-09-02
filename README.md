@@ -112,7 +112,7 @@ python run_service.py --dataname SO-PLC --domain software --lan en --plm_path BE
 
 If your task is related to healthcare (Chinese) or software (English), you can directly use our built-in KG; otherwise, you can also use your own KG:
 
-* Put your task data into data
+* Put your task data into `data`
   * include 3 txt files: train, dev and test datasets
   * each row in train.txt and dev.txt should be like: `[id]\t[label]\t[text]`
   * can refer to the dataset CMID and SO-PLC
