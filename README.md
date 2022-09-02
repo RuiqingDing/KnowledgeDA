@@ -92,10 +92,8 @@ python run_service.py --dataname SO-PLC --domain software --lan en --plm_path BE
 
 * **Attention**
 
-* the fine-tuned model will be saved in `Classify/save_dict`
-* the result will be store as the classification report in `Classify/result`
-
-  * an example of the result on CMID.
+  * the fine-tuned model will be saved in `Classify/save_dict`
+  * the result will be store as the classification report in `Classify/result`, here we give an example of the result on CMID
 
 ```
                 precision    recall  f1-score   support
