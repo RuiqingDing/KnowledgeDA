@@ -18,7 +18,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 jieba.load_userdict(f'KG/CMedicalKG/entities_list.txt') #add medical entities when cutting sentences
-f = open('KG/CMedicalKG/HIT_stop_words.txt', encoding='utf-8') #停用词列表，默认使用哈工大停用词表
+f = open('KG/CMedicalKG/HIT_stop_words.txt', encoding='utf-8') # stopwords
 stop_words = list()
 for stop_word in f.readlines():
     stop_words.append(stop_word[:-1])
