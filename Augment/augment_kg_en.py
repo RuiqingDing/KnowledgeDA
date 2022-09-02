@@ -74,7 +74,7 @@ triples_all = triples_all[~triples_all.eid2.isin(del_eids)]
 # print(f'spend {time.time()-start}\n')
 
 # # load entity names into dictionary
-entities = read_file(f'KG/TagKG/entities_list.txt') #这个是umls的医疗数据集的子集
+entities = read_file(f'KG/TagKG/entities_list.txt')
 # print('Loading tagKG...')
 # print('entity number: ', len(entities))
 mwetokenizer = MWETokenizer(entities, separator=' ')
