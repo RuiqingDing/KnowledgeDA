@@ -2,10 +2,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import time
-from pytorch_pretrained import BertModel, BertTokenizer
-from pytorch_pretrained.optimization import BertAdam
+from Classify.pytorch_pretrained import BertModel, BertTokenizer
+from Classify.pytorch_pretrained.optimization import BertAdam
 from sklearn import metrics
-from load_data import *
+from Classify.load_data import *
 
 
 class Config(object):
@@ -31,8 +31,8 @@ class BERT(nn.Module):
         self.fc = nn.Linear(config.hidden_size, config.num_classes)  
 
     def forward(self, x):
-        context = x[0]  # 输入的句子
-        mask = x[2]  # 对padding部分进行mask，和句子一个size，padding部分用0表示，如：[1, 1, 1, 1, 0, 0]
+        context = x[0] 
+        mask = x[2]  
         pooled = self.bert(context, attention_mask=mask, output_all_encoded_layers=False)
         out = self.fc(pooled)
         return out
@@ -40,21 +40,18 @@ class BERT(nn.Module):
 start_time = time.time()
 
 def softmax(x):
-    row_max = np.max(x) # 计算每行的最大值
-    x = x - row_max # 每行元素都需要减去对应的最大值，否则求exp(x)会溢出，导致inf情况
-    # 计算e的指数次幂
+    row_max = np.max(x) 
+    x = x - row_max 
     x_exp = np.exp(x)
     x_sum = np.sum(x_exp)
     s = x_exp / x_sum
     return s
 
 def get_time_dif(start_time):
-    """获取已使用时间"""
     end_time = time.time()
     time_dif = end_time - start_time
     return round(time_dif, 2)
 
-# 在验证集loss达到最小后500次迭代内没有找到更小loss时，输出验证集的预测指标和混淆矩阵
 def test(config, model, test_iter, save_file):
     # test
     model.load_state_dict(torch.load(save_file))
