@@ -6,7 +6,7 @@ import time
 import jieba
 import os
 
-jieba.load_userdict(f'../KG/CMedicalKG/entities_list.txt')
+jieba.load_userdict(f'KG/CMedicalKG/entities_list.txt')
 
 def replace_entity(text, ent2id, eid2cid, id2cat):
     '''
