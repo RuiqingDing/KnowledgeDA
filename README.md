@@ -43,7 +43,7 @@ python run_service.py --dataname CMID --domain healthcare --lan ch --plm_path BE
 python run_service.py --dataname SO-PLC --domain software --lan en --plm_path BERT_base
 ```
 
-Attention: the fine-tuned model saved in `Classify/save_dict.`
+Attention: the fine-tuned model is saved in `Classify/save_dict.`
 
 
 ### Extension to other task data
