@@ -79,6 +79,3 @@ def load_data(kg_file):
 
     triples_all = pd.concat([triples, triples_reverse], ignore_index=True)
     return id2ent, ent2id, id2cat, cat2id, cid2eidlist, eid2cid, triples_all
-
-if __name__ == "__main__":
-    id2ent, ent2id, id2cat, cat2id, cid2eidlist, eid2cid, triples_all = load_data('../KG')
