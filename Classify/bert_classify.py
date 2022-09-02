@@ -16,13 +16,12 @@ from Classify.load_data import *
 from Classify.aug_quality_assessment import *
 
 class Config(object):
-    """配置参数"""
     def __init__(self, plm_path, dataname, datatype, aug_num, num_classes, epochs, seed):
         self.num_classes = num_classes
         self.class_list = [i for i in range(self.num_classes)]
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')   # 设备
-        self.require_improvement = 500                           # 若超过500 iterations 效果还没提升，则提前结束训练
-        self.num_epochs = epochs                                       # epoch数
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')   
+        self.require_improvement = 500                         
+        self.num_epochs = epochs                                       
         self.plm_path = 'PLMs/'+ plm_path
         self.tokenizer = BertTokenizer.from_pretrained(self.plm_path)
         self.dataname = dataname
@@ -52,13 +51,11 @@ class BERT(nn.Module):
 start_time = time.time()
 
 def get_time_dif(start_time):
-    """获取已使用时间"""
     end_time = time.time()
     time_dif = end_time - start_time
     return round(time_dif, 2)
     
 
-# 训练model
 def train(config, model, train_iter, dev_iter, learning_rate, save_file):
     start_time = time.time()
     model.train()
@@ -71,10 +68,10 @@ def train(config, model, train_iter, dev_iter, learning_rate, save_file):
                          lr=learning_rate,
                          warmup=0.05,
                          t_total=len(train_iter) * config.num_epochs)
-    total_batch = 0  # 记录进行到多少batch
+    total_batch = 0 
     dev_best_loss = float('inf')
-    last_improve = 0  # 记录上次验证集loss下降的batch数
-    flag = False  # 记录是否很久没有效果提升
+    last_improve = 0  
+    flag = False  
     model.train()
     for epoch in range(config.num_epochs):
         print('Epoch [{}/{}]'.format(epoch + 1, config.num_epochs))
@@ -85,7 +82,6 @@ def train(config, model, train_iter, dev_iter, learning_rate, save_file):
             loss.backward()
             optimizer.step()
             if total_batch % 50 == 0:
-                # 每多少轮输出在训练集和验证集上的效果
                 true = labels.data.cpu()
                 predic = torch.max(outputs.data, 1)[1].cpu()
                 train_acc = metrics.accuracy_score(true, predic)
@@ -103,7 +99,6 @@ def train(config, model, train_iter, dev_iter, learning_rate, save_file):
                 model.train()
             total_batch += 1
             if total_batch - last_improve > config.require_improvement:
-                # 验证集loss超过1000batch没下降，结束训练
                 print("No optimization for a long time, auto-stopping...")
                 flag = True
                 break
@@ -112,7 +107,6 @@ def train(config, model, train_iter, dev_iter, learning_rate, save_file):
     test(config, model, dev_iter, save_file)
 
 
-# 在验证集loss达到最小后500次迭代内没有找到更小loss时，输出验证集的预测指标和混淆矩阵
 def test(config, model, test_iter, save_file):
     # test
     model.load_state_dict(torch.load(save_file))
@@ -131,7 +125,7 @@ def test(config, model, test_iter, save_file):
     with open(f"Classify/result/{config.dataname}_{config.datatype}_{config.aug_num}_{config.plm_path.split('/')[-1]}_predict_seed_{config.seed}.txt", "w", encoding="utf-8") as f:
         f.write(str(test_report))
 
-# 迭代后计算并打印出当前iteration上训练集的loss/accurancy和测试集的loss/accurancy
+        
 def evaluate(config, model, data_iter, test=False):
     model.eval()
     loss_total = 0
@@ -172,7 +166,7 @@ def train_knowledgeDA(plm_path, dataname, datatype, aug_num, num_classes, epochs
     np.random.seed(config.seed)
     torch.manual_seed(config.seed)
     torch.cuda.manual_seed_all(config.seed)
-    torch.backends.cudnn.deterministic = True  # 保证每次结果一样
+    torch.backends.cudnn.deterministic = True  
 
     train_iter, dev_iter, test_iter, train_num, dev_num, test_num = load_dataset(config.dataname, config.datatype, config.plm_path, config.aug_num)
 
