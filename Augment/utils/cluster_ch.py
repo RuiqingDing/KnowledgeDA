@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import jieba
 
-jieba.load_userdict('../KG/CMedicalKG/entities_list.txt') #add medical entities when cutting sentences
+jieba.load_userdict('KG/CMedicalKG/entities_list.txt') #add medical entities when cutting sentences
 
 def get_cluster(filename, output_file, n_clusters = 10):
     df = pd.read_csv(f'{filename}', delimiter='\t', header=None)
