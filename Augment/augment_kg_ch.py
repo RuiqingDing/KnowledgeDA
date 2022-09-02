@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# import sys
-# sys.path.append('/home/admin-pku/ruiqing/KnowledgeDA_rebuild/Augment')
+import sys
+sys.path.append("./Augment/")
 from utils.load_data_ch import load_data
 from utils.entity_mask_ch import generate_abstract_data
 from utils.cluster_ch import get_cluster
@@ -9,7 +9,7 @@ from utils.file_handler import read_file, write_file
 import jieba
 import numpy as np
 import pandas as pd
-import synonyms
+# import synonyms
 import random
 from tqdm import tqdm
 import time
@@ -17,15 +17,15 @@ import itertools
 import warnings
 warnings.filterwarnings("ignore")
 
-jieba.load_userdict(f'../KG/CMedicalKG/entities_list.txt') #add medical entities when cutting sentences
-f = open('../KG/CMedicalKG/HIT_stop_words.txt', encoding='utf-8') #停用词列表，默认使用哈工大停用词表
+jieba.load_userdict(f'KG/CMedicalKG/entities_list.txt') #add medical entities when cutting sentences
+f = open('KG/CMedicalKG/HIT_stop_words.txt', encoding='utf-8') #停用词列表，默认使用哈工大停用词表
 stop_words = list()
 for stop_word in f.readlines():
     stop_words.append(stop_word[:-1])
 
 # load data
 start = time.time()
-id2ent, ent2id, id2cat, cat2id, cid2eidlist, eid2cid, triples_all = load_data('../KG')
+id2ent, ent2id, id2cat, cat2id, cid2eidlist, eid2cid, triples_all = load_data('KG')
 print(f'Finish loading data, spend {time.time() - start}')
 
 def synonym_replace(words, n):
@@ -498,9 +498,9 @@ def reload_entities_from_train_data(data_file):
     triples_train = pd.read_csv(f'{data_file}/triples_train.csv')
     return ent2id_train, triples_train
 
-if __name__ == "__main__":
+def augment_KnowledgeDA_ch(dataname):
     print('\nGenerate_abstract_data...')
-    data_file = f'../data/CMID'
+    data_file = f'data/{dataname}'
     input_file = data_file + '/train.txt'
     cluster_file = data_file + '/abstract.txt'
     generate_abstract_data(data_file, input_file, cluster_file, ent2id, eid2cid, id2cat)
@@ -524,3 +524,6 @@ if __name__ == "__main__":
 
     print('\nGenerate_KGER_data...')
     generate_augment_data(data_file, input_file, aug_num = 10)
+
+# if __name__ == "__main__":
+#     augment_KnowledgeDA_ch('CMID')
