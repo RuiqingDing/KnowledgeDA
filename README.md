@@ -95,18 +95,18 @@ python run_service.py --dataname SO-PLC --domain software --lan en --plm_path BE
   * the fine-tuned model will be saved in `Classify/save_dict`
   * the result will be store as the classification report in `Classify/result`, here we give an example of the result on CMID
 
-```
-                precision    recall  f1-score   support
+    ```
+                    precision    recall  f1-score   support
 
-             0     0.8061    0.8421    0.8237       627
-             1     0.7544    0.7681    0.7612       276
-             2     0.5176    0.5665    0.5410       233
-             3     0.6571    0.2556    0.3680        90
+                 0     0.8061    0.8421    0.8237       627
+                 1     0.7544    0.7681    0.7612       276
+                 2     0.5176    0.5665    0.5410       233
+                 3     0.6571    0.2556    0.3680        90
 
-      accuracy                         0.7300      1226
-     macro avg     0.6838    0.6081    0.6235      1226
-  weighted avg     0.7287    0.7300    0.7225      1226
-```
+          accuracy                         0.7300      1226
+         macro avg     0.6838    0.6081    0.6235      1226
+      weighted avg     0.7287    0.7300    0.7225      1226
+    ```
 
 ### Extension to other task data
 
