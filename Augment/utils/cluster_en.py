@@ -1,4 +1,4 @@
-from sklearn.feature_extraction.text import CountVectorizer #文本向量化
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
@@ -21,7 +21,6 @@ def get_cluster(filename, output_file, mwetokenizer, n_clusters = 10):
     df = pd.read_csv(f'{filename}', delimiter='\t', header=None)
     df.columns = ['ID', 'label', 'text']
 
-    # 分词
     words=[]
     for i,row in df.iterrows():
         word=mwetokenizer.tokenize(word_tokenize(row['text']))
@@ -29,18 +28,18 @@ def get_cluster(filename, output_file, mwetokenizer, n_clusters = 10):
         words.append(result)
     print(f'len(words) = {len(words)}')
 
-    # 文本向量化：建立词频矩阵
+
     vect=CountVectorizer()
     x = vect.fit_transform(words)
     x = x.toarray()
 
-    # 构造特征矩阵
+
     words_name = vect.get_feature_names()
     df_fea = pd.DataFrame(x,columns=words_name)
     print(df_fea.shape)
     df_fea_cs = cosine_similarity(df_fea)
 
-    # 模型搭建
+
     kms = KMeans(n_clusters = n_clusters, random_state = 0)
     label_kms = kms.fit_predict(df_fea_cs)
     df['cluster'] = label_kms
