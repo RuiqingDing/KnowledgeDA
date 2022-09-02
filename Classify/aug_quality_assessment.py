@@ -9,11 +9,10 @@ from Classify.load_data import *
 
 
 class Config(object):
-    """配置参数"""
     def __init__(self, dataname, datatype, aug_num, bert_path, num_classes, delta):
         self.num_classes = num_classes
         self.class_list = [i for i in range(self.num_classes)]
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')   # 设备
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  
         self.bert_path = bert_path
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_path)
         self.dataname = dataname
@@ -68,7 +67,7 @@ def test(config, model, test_iter, save_file):
     print("Time usage:", time_dif)
     return probability_all 
 
-# 迭代后计算并打印出当前iteration上训练集的loss/accurancy和测试集的loss/accurancy
+
 def evaluate(config, model, data_iter, test=False):
     model.eval()
     loss_total = 0
@@ -109,7 +108,7 @@ def filter_text(dataname, datatype, aug_num, bert_path, num_classes, delta):
     model = BERT(config).to(config.device)
 
     time_test_start = time.time()
-    probability_all  = test(config, model, data_iter, f"save_dict/{config.dataname}_train_1_{config.bert_path.split('/')[-1]}_1.ckpt")
+    probability_all  = test(config, model, data_iter, f"Classify/save_dict/{config.dataname}_train_1_{config.bert_path.split('/')[-1]}_1.ckpt")
     print('test spending: ', get_time_dif(time_test_start))
 
     for index, row in df.iterrows(): #df.columns = ["ID", "label", "text"]
